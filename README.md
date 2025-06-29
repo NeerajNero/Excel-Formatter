@@ -1,69 +1,68 @@
-# React + TypeScript + Vite
+📦 Serial Number Multi-Sheet Excel Exporter
+A lightweight React + Bootstrap web app that lets you:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+✅ Paste tab/comma-separated data copied from Excel
 
-Currently, two official plugins are available:
+✅ Extract serial numbers from any column (you choose the index)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✅ Add each dataset as a separate worksheet with a custom name (e.g., "Batch A", "Lot 1")
 
-## Expanding the ESLint configuration
+✅ Export everything as a single Excel file with multiple sheets
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🚀 Features
+Paste serial number rows (copied from Excel or CSV)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Define which column contains the Serial No.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Assign a name to each sheet (e.g. "Batch A")
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Add unlimited sheets to memory
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Export a final Excel file with all your custom sheets
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Built using React and Bootstrap
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Excel file generation handled by SheetJS (xlsx)
+
+🖥️ Demo Flow
+Paste your data rows
+
+Enter the sheet name (e.g. "Batch A")
+
+Set the serial number column index (0-based)
+
+Click "Add to Workbook"
+
+Repeat steps 1–4 as needed
+
+Click "Export Excel File" to download the .xlsx
+
+📦 Tech Stack
+React
+
+Bootstrap 5
+
+SheetJS (xlsx) for Excel export
+
+📸 Screenshots
+Add a few screenshots of your UI once hosted or running locally
+
+🛠️ Getting Started
+1. Clone this repo
+bash
+Copy
+Edit
+git clone https://github.com/your-username/serial-multi-sheet-exporter.git
+cd serial-multi-sheet-exporter
+2. Install dependencies
+bash
+Copy
+Edit
+npm install
+# or
+yarn install
+3. Start the app
+bash
+Copy
+Edit
+npm run dev
