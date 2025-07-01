@@ -10,7 +10,8 @@ export default function MultiSheetBuilder() {
   >([]);
 
   const handleAddSheet = () => {
-    const lines = rawText.split("\n").filter((line) => line.trim() !== "");
+    const allLines = rawText.split("\n").filter((line) => line.trim() !== "");
+    const lines = allLines.slice(1); // Skip the first row (headers)
 
     const serials = lines
       .map((line) => {
