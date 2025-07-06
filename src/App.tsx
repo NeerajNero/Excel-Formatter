@@ -7,8 +7,6 @@ export default function App() {
   return (
     <Router>
       <Navbar />
-
-      {/* Routes */}
       <div className="container py-4">
         <Routes>
           <Route path="/first" element={<MultiSheetBuilder />} />

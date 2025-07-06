@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <span className="navbar-brand">🧾 Excel Formatter</span>
+        <Link to='/' className="navbar-brand">🧾 Excel Formatter</Link>
         <button
           className="navbar-toggler"
           type="button"
