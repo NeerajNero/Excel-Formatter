@@ -41,6 +41,7 @@ export default function ThirdExtractor() {
       const qty = parseInt(row["REQ QTY"] || "");
       const unitPrice = cleanDollar(row["QUOTE PRICE"]);
       const total = qty * unitPrice;
+      const purpose = row["END USER NAME"] || "";
       return [
         row["SKU CODE"],
         row["Main OEM Part No"],
@@ -49,7 +50,7 @@ export default function ThirdExtractor() {
         qty,
         formatUSD(unitPrice),
         formatUSD(total),
-        row["PURPOSE"]
+        purpose
       ].join("\t");
     });
 
@@ -65,6 +66,7 @@ export default function ThirdExtractor() {
       const qty = parseInt(row["REQ QTY"] || "");
       const unitPrice = cleanDollar(row["QUOTE PRICE"]);
       const total = qty * unitPrice;
+      const purpose = row["END USER NAME"] || "";
 
       return [
         "",
@@ -78,7 +80,7 @@ export default function ThirdExtractor() {
         qty,
         formatUSD(unitPrice),
         formatUSD(total),
-        row["PURPOSE"]
+        purpose
       ].join("\t");
     });
 
@@ -135,6 +137,7 @@ export default function ThirdExtractor() {
                     const qty = parseInt(row["REQ QTY"] || "");
                     const unitPrice = cleanDollar(row["QUOTE PRICE"]);
                     const total = qty * unitPrice;
+                    const purpose = row["END USER NAME"] || "";
                     return (
                       <tr key={i}>
                         <td>{row["SKU CODE"]}</td>
@@ -144,7 +147,7 @@ export default function ThirdExtractor() {
                         <td>{qty}</td>
                         <td>{formatUSD(unitPrice)}</td>
                         <td>{formatUSD(total)}</td>
-                        <td>{row["PURPOSE"]}</td>
+                        <td>{purpose}</td>
                       </tr>
                     );
                   })}
@@ -183,6 +186,7 @@ export default function ThirdExtractor() {
                     const qty = parseInt(row["REQ QTY"] || "");
                     const unitPrice = cleanDollar(row["QUOTE PRICE"]);
                     const total = qty * unitPrice;
+                    const purpose = row["END USER NAME"] || "";
                     return (
                       <tr key={i}>
                         <td></td>
@@ -196,7 +200,7 @@ export default function ThirdExtractor() {
                         <td>{qty}</td>
                         <td>{formatUSD(unitPrice)}</td>
                         <td>{formatUSD(total)}</td>
-                        <td>{row["PURPOSE"]}</td>
+                        <td>{purpose}</td>
                       </tr>
                     );
                   })}
