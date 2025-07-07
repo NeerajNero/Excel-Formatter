@@ -24,28 +24,30 @@ export default function SecondExtractor() {
     setParsedData(rows);
   };
 
+  // Utility to fetch either Buy Price or Quote Price
+  const getBuyPrice = (row: RawRow): string => {
+    return row["Buy Price"]?.trim() || row["Quote Price"]?.trim() || "";
+  };
+
+  const cleanNumber = (value?: string): number => {
+    return parseFloat(value?.replace(/[,₹\s]/g, "").trim() || "");
+  };
+
   const toNumber = (value?: string): string => {
-    if (typeof value !== "string") return "";
-    const num = parseFloat(value.replace(/[^\d.]/g, ""));
+    const num = cleanNumber(value);
     return isNaN(num) ? "" : num.toFixed(2);
   };
 
   const add5Percent = (value?: string): string => {
-    if (typeof value !== "string") return "";
-    const num = parseFloat(value.replace(/[^\d.]/g, ""));
+    const num = cleanNumber(value);
     return isNaN(num) ? "" : (num * 1.05).toFixed(2);
   };
 
   const calculateMargin = (cost?: string, sale?: string): string => {
-    if (typeof cost !== "string" || typeof sale !== "string") return "";
-
-    const costNum = parseFloat(cost.replace(/[^\d.]/g, ""));
-    const saleNum = parseFloat(sale.replace(/[^\d.]/g, ""));
-
+    const costNum = cleanNumber(cost);
+    const saleNum = cleanNumber(sale);
     if (isNaN(costNum) || isNaN(saleNum) || costNum === 0) return "";
-
-    const margin = ((saleNum - costNum) / costNum) * 100;
-    return margin.toFixed(2);
+    return (((saleNum - costNum) / costNum) * 100).toFixed(2);
   };
 
   const copyTable1 = () => {
@@ -58,10 +60,10 @@ export default function SecondExtractor() {
       return [
         row["Req Qty"] || "",
         row["SKU Code"] || "",
-        toNumber(row["Quote Price"]),
-        add5Percent(row["Quote Price"]),
+        toNumber(getBuyPrice(row)),
+        add5Percent(getBuyPrice(row)),
         toNumber(row["Sell Price"]),
-        calculateMargin(row["Quote Price"], row["Sell Price"]),
+        calculateMargin(getBuyPrice(row), row["Sell Price"]),
         row["End User Name"] || "",
         row["Vendor"] || "",
         ""
@@ -79,7 +81,7 @@ export default function SecondExtractor() {
 
     const rows = parsedData.map((row) => {
       const qty = parseInt(row["Req Qty"] || "");
-      const unitPrice = parseFloat((row["Quote Price"] || "").replace(/[^\d.]/g, ""));
+      const unitPrice = cleanNumber(getBuyPrice(row));
       const total = isNaN(qty) || isNaN(unitPrice) ? "" : (qty * unitPrice).toFixed(2);
 
       return [
@@ -145,10 +147,10 @@ export default function SecondExtractor() {
                     <tr key={i}>
                       <td>{row["Req Qty"] || ""}</td>
                       <td>{row["SKU Code"] || ""}</td>
-                      <td>{toNumber(row["Quote Price"])}</td>
-                      <td>{add5Percent(row["Quote Price"])}</td>
+                      <td>{toNumber(getBuyPrice(row))}</td>
+                      <td>{add5Percent(getBuyPrice(row))}</td>
                       <td>{toNumber(row["Sell Price"])}</td>
-                      <td>{calculateMargin(row["Quote Price"], row["Sell Price"])}</td>
+                      <td>{calculateMargin(getBuyPrice(row), row["Sell Price"])}</td>
                       <td>{row["End User Name"] || ""}</td>
                       <td>{row["Vendor"] || ""}</td>
                       <td></td>
@@ -188,7 +190,7 @@ export default function SecondExtractor() {
                 <tbody>
                   {parsedData.map((row, i) => {
                     const qty = parseInt(row["Req Qty"] || "");
-                    const unitPrice = parseFloat((row["Quote Price"] || "").replace(/[^\d.]/g, ""));
+                    const unitPrice = cleanNumber(getBuyPrice(row));
                     const total = isNaN(qty) || isNaN(unitPrice)
                       ? ""
                       : (qty * unitPrice).toFixed(2);

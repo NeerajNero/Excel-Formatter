@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MultiSheetBuilder from "./pages/SerialExtractor";
 import SecondExtractor from "./pages/NewFormatEtractor";
 import Navbar from "./pages/Navbar";
+import ThirdExtractor from "./pages/ThirdExtractor";
 export default function App() {
   return (
     <Router>
@@ -11,6 +12,7 @@ export default function App() {
         <Routes>
           <Route path="/first" element={<MultiSheetBuilder />} />
           <Route path="/second" element={<SecondExtractor />} />
+          <Route path="/third" element={<ThirdExtractor />} />
           <Route
             path="/"
             element={

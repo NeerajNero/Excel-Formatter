@@ -26,6 +26,11 @@ export default function Navbar() {
                 Second Excel Extractor
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/third" className="nav-link">
+                Third Excel Extractor
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
