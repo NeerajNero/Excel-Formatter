@@ -25,6 +25,7 @@ export default function MultiSheetBuilder() {
   const [columnIndex, setColumnIndex] = useState<number>(1);
   const [sheetName, setSheetName] = useState<string>("");
   const [lotOnlyMode, setLotOnlyMode] = useState<boolean>(false);
+  const [hasHeader, setHasHeader] = useState<boolean>(false);
   const [sheetDataList, setSheetDataList] = useState<SheetData[]>([]);
   const [editingSheetIndex, setEditingSheetIndex] = useState<number | null>(null);
 
@@ -47,7 +48,9 @@ export default function MultiSheetBuilder() {
   const handleAddOrUpdateSheet = () => {
     const lines = rawText.split("\n").filter((line) => line.trim() !== "");
 
-    const entries = lines
+    const slicedLines = hasHeader ? lines.slice(1) : lines;
+
+    const entries = slicedLines
       .map((line) => {
         const cols = line.includes("\t") ? line.split("\t") : line.split(",");
         return cols[columnIndex]?.trim();
@@ -59,8 +62,7 @@ export default function MultiSheetBuilder() {
       return;
     }
 
-    const finalSheetName =
-      sheetName.trim() || `Sheet ${sheetDataList.length + 1}`;
+    const finalSheetName = sheetName.trim() || `Sheet ${sheetDataList.length + 1}`;
 
     const newSheet: SheetData = {
       sheetName: finalSheetName,
@@ -180,7 +182,7 @@ export default function MultiSheetBuilder() {
               />
             </div>
 
-            <div className="col-md-4 d-flex align-items-end">
+            <div className="col-md-4 d-flex align-items-end justify-content-between">
               <div className="form-check">
                 <input
                   className="form-check-input"
@@ -191,6 +193,18 @@ export default function MultiSheetBuilder() {
                 />
                 <label className="form-check-label fw-bold" htmlFor="lotOnlyCheck">
                   Lot Number Mode
+                </label>
+              </div>
+              <div className="form-check ms-3">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={hasHeader}
+                  onChange={() => setHasHeader((prev) => !prev)}
+                  id="hasHeaderCheck"
+                />
+                <label className="form-check-label fw-bold" htmlFor="hasHeaderCheck">
+                  First row is header
                 </label>
               </div>
             </div>
