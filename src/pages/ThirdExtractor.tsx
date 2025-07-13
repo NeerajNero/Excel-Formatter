@@ -32,14 +32,9 @@ export default function ThirdExtractor() {
     return isNaN(num) ? "" : `$ ${num.toFixed(2)}`;
   };
 
-  const formatPlain = (num: number): string => {
-    return isNaN(num) ? "" : num.toFixed(2);
-  };
-
   const copyTemplate1 = () => {
     const header = [
-      "SKU CODE", "OEM PART NO", "Variant", "DESCRIPTION",
-      "REQ QTY", "QUOTE PRICE $", "Total $", "PURPOSE"
+      "SKU CODE", "OEM PART NO", "Variant", "DESCRIPTION", "REQ QTY", "QUOTE PRICE $", "Total $", "PURPOSE"
     ].join("\t");
 
     const rows = parsedData.map(row => {
@@ -64,8 +59,7 @@ export default function ThirdExtractor() {
 
   const copyTemplate2 = () => {
     const header = [
-      "PO#", "PO date", "Status", "Supplier", "Item", "Item Code",
-      "Variant", "Description", "Qty", "U/P", "Total", "Purpose"
+      "PO#", "PO date", "Status", "Supplier", "Item", "Item Code", "Variant", "Description", "Qty", "U/P", "Total", "Purpose"
     ].join("\t");
 
     const rows = parsedData.map(row => {
@@ -84,8 +78,8 @@ export default function ThirdExtractor() {
         row["VARIANT CODE"],
         row["DESCRIPTION"],
         qty,
-        formatPlain(unitPrice),
-        formatPlain(total),
+        formatUSD(unitPrice),
+        formatUSD(total),
         purpose
       ].join("\t");
     });
@@ -117,7 +111,6 @@ export default function ThirdExtractor() {
 
       {parsedData.length > 0 && (
         <div className="row g-4">
-          {/* Template 1 */}
           <div className="col-md-6">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <h4>🧾 Template 1</h4>
@@ -163,10 +156,9 @@ export default function ThirdExtractor() {
             </div>
           </div>
 
-          {/* Template 2 */}
           <div className="col-md-6">
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <h4>📦 Template 2</h4>
+              <h4>📦 Template 2!</h4>
               <button className="btn btn-sm btn-outline-secondary" onClick={copyTemplate2}>
                 Copy Template 2
               </button>
@@ -206,8 +198,8 @@ export default function ThirdExtractor() {
                         <td>{row["VARIANT CODE"]}</td>
                         <td>{row["DESCRIPTION"]}</td>
                         <td>{qty}</td>
-                        <td>{formatPlain(unitPrice)}</td>
-                        <td>{formatPlain(total)}</td>
+                        <td>{formatUSD(unitPrice)}</td>
+                        <td>{formatUSD(total)}</td>
                         <td>{purpose}</td>
                       </tr>
                     );
