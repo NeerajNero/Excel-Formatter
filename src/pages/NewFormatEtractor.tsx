@@ -24,7 +24,6 @@ export default function SecondExtractor() {
     setParsedData(rows);
   };
 
-  // Utility to fetch either Buy Price or Quote Price
   const getBuyPrice = (row: RawRow): string => {
     return row["Buy Price"]?.trim() || row["Quote Price"]?.trim() || "";
   };
@@ -51,13 +50,21 @@ export default function SecondExtractor() {
   };
 
   const copyTable1 = () => {
+    const today = new Date().toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).replace(/ /g, "-");
+
     const header = [
+      today,
       "Qty", "Item", "Mustek Buy Price", "Quinta 5%", "End Price", "Margin",
       "Customer", "Vendor", "PO #"
     ].join("\t");
 
     const rows = parsedData.map((row) => {
       return [
+        "",
         row["Req Qty"] || "",
         row["SKU Code"] || "",
         toNumber(getBuyPrice(row)),
@@ -74,7 +81,14 @@ export default function SecondExtractor() {
   };
 
   const copyTable2 = () => {
+    const today = new Date().toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).replace(/ /g, "-");
+
     const header = [
+      today,
       "PO No", "PO dt", "Customer", "Part number", "Variant/Brand", "Product type",
       "Qty", "U/P", "Total", "ETD", "BU", "Supplier"
     ].join("\t");
@@ -85,6 +99,7 @@ export default function SecondExtractor() {
       const total = isNaN(qty) || isNaN(unitPrice) ? "" : (qty * unitPrice).toFixed(2);
 
       return [
+        "",
         "", "", row["End User Name"] || "", row["SKU Code"] || "", "", "",
         isNaN(qty) ? "" : qty,
         isNaN(unitPrice) ? "" : unitPrice.toFixed(2),
@@ -94,6 +109,12 @@ export default function SecondExtractor() {
 
     navigator.clipboard.writeText([header, ...rows].join("\n"));
   };
+
+  const today = new Date().toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).replace(/ /g, "-");
 
   return (
     <div className="container py-4">
@@ -129,22 +150,26 @@ export default function SecondExtractor() {
             </div>
             <div className="table-responsive">
               <table className="table table-bordered table-sm table-striped">
-                <thead className="table-light">
+                <thead>
                   <tr>
-                    <th>Qty</th>
-                    <th>Item</th>
-                    <th>Mustek Buy Price</th>
-                    <th>Quinta 5%</th>
-                    <th>End Price</th>
-                    <th>Margin</th>
-                    <th>Customer</th>
-                    <th>Vendor</th>
-                    <th>PO #</th>
+                    <th style={{ fontWeight: "bold" }}>{today}</th>
+                    {[
+                      "Qty", "Item", "Mustek Buy Price", "Quinta 5%", "End Price",
+                      "Margin", "Customer", "Vendor", "PO #"
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        style={{ backgroundColor: "rgba(0, 128, 0, 0.1)" }}
+                      >
+                        {header}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   {parsedData.map((row, i) => (
                     <tr key={i}>
+                      <td></td>
                       <td>{row["Req Qty"] || ""}</td>
                       <td>{row["SKU Code"] || ""}</td>
                       <td>{toNumber(getBuyPrice(row))}</td>
@@ -171,20 +196,20 @@ export default function SecondExtractor() {
             </div>
             <div className="table-responsive">
               <table className="table table-bordered table-sm table-striped">
-                <thead className="table-light">
+                <thead>
                   <tr>
-                    <th>PO No</th>
-                    <th>PO dt</th>
-                    <th>Customer</th>
-                    <th>Part number</th>
-                    <th>Variant/Brand</th>
-                    <th>Product type</th>
-                    <th>Qty</th>
-                    <th>U/P</th>
-                    <th>Total</th>
-                    <th>ETD</th>
-                    <th>BU</th>
-                    <th>Supplier</th>
+                    <th style={{ fontWeight: "bold" }}>{today}</th>
+                    {[
+                      "PO No", "PO dt", "Customer", "Part number", "Variant/Brand",
+                      "Product type", "Qty", "U/P", "Total", "ETD", "BU", "Supplier"
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        style={{ backgroundColor: "rgba(0, 128, 0, 0.1)" }}
+                      >
+                        {header}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -197,6 +222,7 @@ export default function SecondExtractor() {
 
                     return (
                       <tr key={i}>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>{row["End User Name"] || ""}</td>
