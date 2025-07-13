@@ -49,13 +49,16 @@ export default function SecondExtractor() {
     return (((saleNum - costNum) / costNum) * 100).toFixed(2);
   };
 
-  const copyTable1 = () => {
-    const today = new Date().toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).replace(/ /g, "-");
+  const formatNumericDate = () => {
+    const d = new Date();
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`; // e.g., 13-07-2025
+  };
 
+  const copyTable1 = () => {
+    const today = formatNumericDate();
     const header = [
       today,
       "Qty", "Item", "Mustek Buy Price", "Quinta 5%", "End Price", "Margin",
@@ -81,14 +84,7 @@ export default function SecondExtractor() {
   };
 
   const copyTable2 = () => {
-    const today = new Date().toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).replace(/ /g, "-");
-
     const header = [
-      today,
       "PO No", "PO dt", "Customer", "Part number", "Variant/Brand", "Product type",
       "Qty", "U/P", "Total", "ETD", "BU", "Supplier"
     ].join("\t");
@@ -99,7 +95,6 @@ export default function SecondExtractor() {
       const total = isNaN(qty) || isNaN(unitPrice) ? "" : (qty * unitPrice).toFixed(2);
 
       return [
-        "",
         "", "", row["End User Name"] || "", row["SKU Code"] || "", "", "",
         isNaN(qty) ? "" : qty,
         isNaN(unitPrice) ? "" : unitPrice.toFixed(2),
@@ -110,11 +105,7 @@ export default function SecondExtractor() {
     navigator.clipboard.writeText([header, ...rows].join("\n"));
   };
 
-  const today = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).replace(/ /g, "-");
+  const today = formatNumericDate();
 
   return (
     <div className="container py-4">
@@ -186,7 +177,7 @@ export default function SecondExtractor() {
             </div>
           </div>
 
-          {/* Table 2 */}
+          {/* Table 2 (unchanged) */}
           <div className="col-md-6">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <h4>📦 PO Format Table</h4>
@@ -196,20 +187,20 @@ export default function SecondExtractor() {
             </div>
             <div className="table-responsive">
               <table className="table table-bordered table-sm table-striped">
-                <thead>
+                <thead className="table-light">
                   <tr>
-                    <th style={{ fontWeight: "bold" }}>{today}</th>
-                    {[
-                      "PO No", "PO dt", "Customer", "Part number", "Variant/Brand",
-                      "Product type", "Qty", "U/P", "Total", "ETD", "BU", "Supplier"
-                    ].map((header) => (
-                      <th
-                        key={header}
-                        style={{ backgroundColor: "rgba(0, 128, 0, 0.1)" }}
-                      >
-                        {header}
-                      </th>
-                    ))}
+                    <th>PO No</th>
+                    <th>PO dt</th>
+                    <th>Customer</th>
+                    <th>Part number</th>
+                    <th>Variant/Brand</th>
+                    <th>Product type</th>
+                    <th>Qty</th>
+                    <th>U/P</th>
+                    <th>Total</th>
+                    <th>ETD</th>
+                    <th>BU</th>
+                    <th>Supplier</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -222,7 +213,6 @@ export default function SecondExtractor() {
 
                     return (
                       <tr key={i}>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td>{row["End User Name"] || ""}</td>
