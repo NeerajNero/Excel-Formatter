@@ -158,7 +158,7 @@ export default function ThirdExtractor() {
 
           <div className="col-md-6">
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <h4>📦 Template 2</h4>
+              <h4>📦 Template 2!</h4>
               <button className="btn btn-sm btn-outline-secondary" onClick={copyTemplate2}>
                 Copy Template 2
               </button>
