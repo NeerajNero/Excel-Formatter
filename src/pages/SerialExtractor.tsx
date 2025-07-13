@@ -106,7 +106,7 @@ export default function MultiSheetBuilder() {
     );
 
     navigator.clipboard.writeText([headers.join("\t"), ...rows].join("\n"));
-    alert(`✅ Sheet "${sheet.sheetName}" copied!`);
+   
   };
 
   const handleEditSheet = (index: number) => {
