@@ -4,6 +4,7 @@ import MultiSheetBuilder from "./pages/SerialExtractor";
 import SecondExtractor from "./pages/NewFormatEtractor";
 import Navbar from "./pages/Navbar";
 import ThirdExtractor from "./pages/ThirdExtractor";
+import ExcelUploadBuilder from "./pages/ExcelGeneratorWithUpload";
 export default function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ export default function App() {
           <Route path="/first" element={<MultiSheetBuilder />} />
           <Route path="/second" element={<SecondExtractor />} />
           <Route path="/third" element={<ThirdExtractor />} />
+          <Route path="/fourth" element={<ExcelUploadBuilder />} />
           <Route
             path="/"
             element={
